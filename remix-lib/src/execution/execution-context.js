@@ -307,7 +307,7 @@ function ExecutionContext () {
 
 var transactionDetailsLinks = {
   'Main': 'https://tangerine.garden/transaction/',
-  'Testnet': 'https://testnet.tangerine.garden/transation/'
+  'Testnet': 'https://testnet.tangerine.garden/transaction/'
 }
 
 module.exports = new ExecutionContext()
