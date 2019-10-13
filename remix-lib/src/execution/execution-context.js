@@ -12,8 +12,8 @@ var rlp = ethUtil.rlp
 var injectedProvider
 
 var web3
-if (typeof window !== 'undefined' && typeof window.web3 !== 'undefined') {
-  injectedProvider = window.web3.currentProvider
+if (typeof window !== 'undefined' && typeof window.tangerine !== 'undefined') {
+  injectedProvider = window.tangerine
   web3 = new Web3(injectedProvider)
 } else {
   web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'))
@@ -96,7 +96,7 @@ var vms = {
   constantinople: createVm('constantinople')
 }
 
-var mainNetGenesisHash = '0xd4e56740f876aef8c010b86a40d5f56745a118d0906a34e69aec8c0db1cb8fa3'
+var mainNetGenesisHash = '0xcbfc86c8cf68d0207a1dff32b7397d9ecfef91371af0725509d78d9d578b405d'
 
 /*
   trigger contextChanged, web3EndpointChanged
@@ -124,7 +124,7 @@ function ExecutionContext () {
 
   this.askPermission = function () {
     // metamask
-    if (ethereum && typeof ethereum.enable === 'function') ethereum.enable()
+    if (tangerine && typeof tangerine.enable === 'function') tangerine.enable()
   }
 
   this.getProvider = function () {
@@ -147,15 +147,11 @@ function ExecutionContext () {
         var name = null
         if (err) name = 'Unknown'
         // https://github.com/ethereum/EIPs/blob/master/EIPS/eip-155.md
-        else if (id === '1') name = 'Main'
-        else if (id === '2') name = 'Morden (deprecated)'
-        else if (id === '3') name = 'Ropsten'
-        else if (id === '4') name = 'Rinkeby'
-        else if (id === '5') name = 'Görli'
-        else if (id === '42') name = 'Kovan'
+        else if (id === '411') name = 'Main'
+        else if (id === '374') name = 'Testnet'
         else name = 'Custom'
 
-        if (id === '1') {
+        if (id === '411') {
           this.web3().eth.getBlock(0, (error, block) => {
             if (error) console.log('cant query first block')
             if (block && block.hash !== mainNetGenesisHash) name = 'Custom'
@@ -310,10 +306,8 @@ function ExecutionContext () {
 }
 
 var transactionDetailsLinks = {
-  'Main': 'https://www.etherscan.io/tx/',
-  'Rinkeby': 'https://rinkeby.etherscan.io/tx/',
-  'Ropsten': 'https://ropsten.etherscan.io/tx/',
-  'Kovan': 'https://kovan.etherscan.io/tx/'
+  'Main': 'https://tangerine.garden/transaction/',
+  'Testnet': 'https://testnet.tangerine.garden/transation/'
 }
 
 module.exports = new ExecutionContext()
